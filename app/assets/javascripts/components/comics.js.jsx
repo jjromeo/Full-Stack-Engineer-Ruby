@@ -1,6 +1,6 @@
 var Comics = React.createClass({
   render: function() {
-    var comics = this.state.comics.map(function(comic) {
+    var comics = this.props.comics.map(function(comic) {
       return <Comic key={comic.id} title={comic.title} image_url={comic.image_url}/>
     }.bind(this));
     return(
@@ -11,8 +11,4 @@ var Comics = React.createClass({
       </div>
     )
   },
-
-  getInitialState: function() {
-    return { comics: this.props.comics }
-  }
 })

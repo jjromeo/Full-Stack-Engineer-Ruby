@@ -5,7 +5,7 @@ class ComicWrapper
     @data = data
   end
 
-  def as_json(options)
+  def as_json(options = {})
     {
       title: title,
       id: id,
