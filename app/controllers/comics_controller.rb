@@ -5,8 +5,13 @@ class ComicsController < ApplicationController
   end
 
   def fetch
+    character = params[:character]
     set =  params[:set].to_i || 1
-    @comics = MarvelApi.new.get_comics(set: set)
+    if character.present?
+      @comics = MarvelApi.new.get_comics_by_character(set: set, name: character)
+    else
+      @comics = MarvelApi.new.get_comics(set: set)
+    end
     @comics = @comics.map {|comic| ComicWrapper.new(comic) }
     render json: @comics
   end

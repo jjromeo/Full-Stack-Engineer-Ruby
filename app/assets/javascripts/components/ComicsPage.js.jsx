@@ -7,6 +7,8 @@ var ComicsPage = React.createClass({
   render: function() {
     return(
       <div>
+        <input type="text" value={this.state.searchValue} onChange={this.updateSearchValue} placeholder="Search for a character"></input>
+        <button onClick={this.getComics} >Search!</button>
         <Comics comics={this.state.currentComics}/>
         <p>Current page: {this.state.pageNumber}</p>
         <button disabled={this.state.disableButtons} onClick={this.previousPage}>Previous Page</button>
@@ -67,7 +69,8 @@ var ComicsPage = React.createClass({
     this.setState({ disableButtons: true });
     $.ajax({
       data: {
-        set: this.set
+        set: this.set,
+        character: this.state.searchValue
       },
       url: '/comics/fetch',
       type: "GET",
@@ -77,5 +80,9 @@ var ComicsPage = React.createClass({
         this.refreshCurrentComics();
       }.bind(this)
     });
+  },
+
+  updateSearchValue: function(event) {
+    this.setState({ searchValue: event.target.value });
   }
 })
