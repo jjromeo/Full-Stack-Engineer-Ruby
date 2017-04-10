@@ -6,14 +6,15 @@ class MarvelApi
   PUBLIC_KEY = '13f408c89f57ccc5b7754610e0fcc5ff'
   PRIVATE_KEY =  Rails.application.secrets.marvel_private_key
   ORDER_BY = "-onsaleDate"
-  LIMIT = 100
+  LIMIT = 90
 
-  def comics_url
-    URI("#{BASE_URL}/comics?ts=#{timestamp}&apikey=#{PUBLIC_KEY}&hash=#{hash}&orderBy=#{ORDER_BY}&limit=#{LIMIT}")
+  def comics_url(offset: 0)
+    URI("#{BASE_URL}/comics?ts=#{timestamp}&apikey=#{PUBLIC_KEY}&hash=#{hash}&orderBy=#{ORDER_BY}&limit=#{LIMIT}&offset=#{offset}")
   end
 
-  def get_comics
-    JSON.parse(Net::HTTP.get(comics_url)).fetch('data', {}).fetch('results', [])
+  def get_comics(set: 1)
+    offset = (set - 1) * LIMIT
+    JSON.parse(Net::HTTP.get(comics_url(offset: offset))).fetch('data', {}).fetch('results', [])
   end
 
   private
