@@ -12,20 +12,20 @@ class MarvelApi
   def get_comics(set: 1)
     offset = (set - 1) * LIMIT
     url = comics_url(offset: offset)
-    fetch_results(url)
+    get_parsed_results(url)
   end
 
   def get_comics_by_character(set: 1, name:)
     offset = (set - 1) * LIMIT
     id = get_character_id(name)
     url = character_comics_url(offset: offset, character_id: id)
-    fetch_results(url)
+    get_parsed_results(url)
   end
 
   private
 
   def get_character_id(name)
-    fetch_results(characters_url(name)).first.fetch('id')
+    get_parsed_results(characters_url(name)).first.fetch('id')
   end
 
   def characters_url(name)
@@ -43,7 +43,7 @@ class MarvelApi
     )
   end
 
-  def fetch_results(url)
+  def get_parsed_results(url)
     JSON.parse(Net::HTTP.get(url)).fetch('data', {}).fetch('results', [])
   end
 
@@ -53,10 +53,6 @@ class MarvelApi
       path: "#{BASE_PATH}/#{resource}",
       query: cred_params.merge(params).to_query
     )
-  end
-
-  def credential_params
-    "ts=#{timestamp}&apikey=#{PUBLIC_KEY}&hash=#{hash}"
   end
 
   def cred_params
