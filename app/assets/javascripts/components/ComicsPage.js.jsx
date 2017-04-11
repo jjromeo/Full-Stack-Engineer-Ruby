@@ -8,7 +8,7 @@ var ComicsPage = React.createClass({
     return(
       <div>
         <input type="text" value={this.state.searchValue} onChange={this.updateSearchValue} placeholder="Search for a character"></input>
-        <button onClick={this.getComics} >Search!</button>
+        <button onClick={this.getComics}>Search!</button>
         <Comics comics={this.state.currentComics} handleFavouriteClick={this.handleFavouriteClick}/>
         <p>Current page: {this.state.pageNumber}</p>
         <button disabled={this.state.disableButtons} onClick={this.previousPage}>Previous Page</button>
