@@ -1,0 +1,27 @@
+var HeartImage = React.createClass({
+  render: function() {
+    return (
+    <img className="heart" src={this.state.image_url} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={this.handleClick}></img>
+    )
+  },
+
+  getInitialState: function() {
+    return { image_url: this.heart_off };
+  },
+
+  mouseOver: function() {
+    this.setState({ image_url: this.heart_hover })
+  },
+
+  mouseOut: function() {
+    this.setState({ image_url: this.heart_off })
+  },
+
+  handleClick: function() {
+    this.setState({ image_url: this.heart_on })
+  },
+
+  heart_off: "<%= asset_url('heart_off') %>",
+  heart_hover: "<%= asset_url('heart_hover') %>",
+  heart_on: "<%= asset_url('heart_on') %>"
+})

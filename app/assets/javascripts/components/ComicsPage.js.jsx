@@ -18,7 +18,7 @@ var ComicsPage = React.createClass({
   },
 
   getInitialState: function() {
-    return { allComics: this.props.comics, currentComics: this.currentComics(this.props.comics, this.page), pageNumber: 1, disableButtons: '' };
+    return { allComics: this.props.comics, currentComics: this.currentComics(this.props.comics, this.page), images: this.props.images, pageNumber: 1, disableButtons: '' };
   },
 
   previousPage: function() {
