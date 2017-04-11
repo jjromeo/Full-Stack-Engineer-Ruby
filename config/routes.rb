@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   end
 
   resources :favourites, only: :create
+  delete "/favourites/:comic_id", to: 'favourites#destroy', as: :favourite
 end
