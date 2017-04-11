@@ -9,7 +9,8 @@ class ComicWrapper
     {
       title: title,
       id: id,
-      image_url: image_url
+      imageUrl: image_url,
+      isFavourited: favourited
     }
   end
 
@@ -23,6 +24,10 @@ class ComicWrapper
 
   def image_url
     "#{raw_image_url}/#{IMAGE_VARIANT_SIZE}.#{image_extension}"
+  end
+
+  def favourited
+    Favourite.favourited?(id)
   end
 
   private

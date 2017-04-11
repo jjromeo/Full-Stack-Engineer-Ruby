@@ -9,7 +9,7 @@ var ComicsPage = React.createClass({
       <div>
         <input type="text" value={this.state.searchValue} onChange={this.updateSearchValue} placeholder="Search for a character"></input>
         <button onClick={this.getComics} >Search!</button>
-        <Comics comics={this.state.currentComics}/>
+        <Comics comics={this.state.currentComics} handleFavouriteClick={this.handleFavouriteClick}/>
         <p>Current page: {this.state.pageNumber}</p>
         <button disabled={this.state.disableButtons} onClick={this.previousPage}>Previous Page</button>
         <button disabled={this.state.disableButtons} onClick={this.nextPage}>Next page</button>
@@ -18,7 +18,7 @@ var ComicsPage = React.createClass({
   },
 
   getInitialState: function() {
-    return { allComics: this.props.comics, currentComics: this.currentComics(this.props.comics, this.page), images: this.props.images, pageNumber: 1, disableButtons: '' };
+    return { allComics: this.indexComics(this.props.comics), currentComics: this.currentComics(this.props.comics, this.page), images: this.props.images, pageNumber: 1, disableButtons: '' };
   },
 
   previousPage: function() {
@@ -76,13 +76,27 @@ var ComicsPage = React.createClass({
       type: "GET",
       dataType: "json",
       success: function (comics) {
-        this.setState({ allComics: comics, disableButtons: ''});
+        var indexedComics = this.indexComics(comics);
+        this.setState({ allComics: indexedComics, disableButtons: ''});
         this.refreshCurrentComics();
       }.bind(this)
     });
   },
 
+  indexComics: function(comics) {
+    var indexedComics = comics.map(function(comic, index){
+      comic.index = index
+      return comic
+    })
+    return indexedComics;
+  },
+
   updateSearchValue: function(event) {
     this.setState({ searchValue: event.target.value });
+  },
+
+  handleFavouriteClick(comicIndex, isFavourited) {
+    var comic = this.state.allComics[comicIndex];
+    comic.isFavourited = isFavourited;
   }
 })

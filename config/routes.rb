@@ -6,4 +6,6 @@ Rails.application.routes.draw do
       get :fetch
     end
   end
+
+  resources :favourites, only: :create
 end

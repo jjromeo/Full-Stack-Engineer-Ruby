@@ -1,27 +1,64 @@
 var HeartImage = React.createClass({
   render: function() {
     return (
-    <img className="heart" src={this.state.image_url} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={this.handleClick}></img>
+    <img className="heart" src={this.heartImage()} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={this.handleClick}></img>
     )
   },
 
   getInitialState: function() {
-    return { image_url: this.heart_off };
+    return { heartState: this.initialHeartState() };
   },
 
   mouseOver: function() {
-    this.setState({ image_url: this.heart_hover })
+    this.changeHeartState('hovered');
   },
 
   mouseOut: function() {
-    this.setState({ image_url: this.heart_off })
+    this.changeHeartState('default');
   },
 
   handleClick: function() {
-    this.setState({ image_url: this.heart_on })
+    $.ajax({
+      data: {
+        comic_id: this.props.comic_id
+        },
+      url: '/favourites',
+      type: 'POST',
+      success: function(response) {
+        this.changeHeartState('beenFavourited');
+        this.props.handleFavouriteClick(true);
+      }.bind(this)
+    })
+  },
+
+  changeHeartState: function(state) {
+    if(this.state.heartState == 'beenFavourited') {
+        return;
+      } else {
+        this.setState({ heartState: state });
+      }
+  },
+
+  heartImage: function() {
+    switch (this.state.heartState) {
+      case 'default':
+        return this.heart_off;
+      case 'hovered':
+        return this.heart_hover;
+      case 'beenFavourited':
+        return this.heart_on;
+    }
   },
 
   heart_off: "<%= asset_url('heart_off') %>",
   heart_hover: "<%= asset_url('heart_hover') %>",
-  heart_on: "<%= asset_url('heart_on') %>"
+  heart_on: "<%= asset_url('heart_on') %>",
+
+  initialHeartState: function() {
+    if(this.props.isFavourited) {
+      return 'beenFavourited'
+    } else {
+      return 'default'
+    }
+  }
 })
