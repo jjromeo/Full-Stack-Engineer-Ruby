@@ -11,7 +11,7 @@ var ComicsPage = React.createClass({
           <img src="<%= asset_url('marvel_logo') %>"/>
           <input type="text" value={this.state.searchValue} onKeyPress={this.handleKeyPress} onChange={this.updateSearchValue} placeholder="Search for marvel characters or teams..." autoFocus></input>
         </div>
-        { this.state.allComics.length > 0 ?
+        { this.state.currentComics.length > 0 ?
           <Comics comics={this.state.currentComics} handleFavouriteClick={this.handleFavouriteClick}/>
           :
           <div id="no_comics">
