@@ -3,7 +3,7 @@ require 'net/http'
 class MarvelApi
   ORDER_BY = "-onsaleDate"
   LIMIT = 30
-  CACHE_POLICY = lambda { 7.days.ago }
+  CACHE_POLICY = lambda { 2.days.ago }
 
   attr_reader :character, :wrapper, :set,  :url_helper
 
