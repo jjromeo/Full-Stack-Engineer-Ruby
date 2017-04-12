@@ -10,10 +10,18 @@ class ApiRequest < ActiveRecord::Base
   end
 
   def cache(cache_policy)
-    if new_record? || updated_at < cache_policy.call
+    if new_record? || updated_at < cache_policy.call || invalid?
       yield(self)
       update_attributes(updated_at: Time.zone.now)
     end
     self
+  end
+
+  def invalid?
+    response_code != 200
+  end
+
+  def response_code
+    response.present? ? JSON.parse(response).fetch("code") : nil
   end
 end
