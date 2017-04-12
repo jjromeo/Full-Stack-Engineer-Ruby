@@ -2,7 +2,7 @@ class MarvelUrlHelper
   VERSION = 'v1'
   HOST = "gateway.marvel.com"
   BASE_PATH = "/#{VERSION}/public"
-  PUBLIC_KEY = '13f408c89f57ccc5b7754610e0fcc5ff'
+  PUBLIC_KEY = Rails.application.secrets.marvel_public_key
   PRIVATE_KEY = Rails.application.secrets.marvel_private_key
 
   attr_reader :order_by, :limit
