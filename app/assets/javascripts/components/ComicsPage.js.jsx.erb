@@ -8,7 +8,7 @@ var ComicsPage = React.createClass({
     return(
       <div>
         <div id="search_header" className="box_shadow">
-          <img src="/assets/marvel_logo.png"/>
+          <img src="<%= asset_url('marvel_logo') %>"/>
           <input type="text" value={this.state.searchValue} onKeyPress={this.handleKeyPress} onChange={this.updateSearchValue} placeholder="Search for marvel characters or teams..." autoFocus></input>
         </div>
         { this.state.allComics.length > 0 ?
