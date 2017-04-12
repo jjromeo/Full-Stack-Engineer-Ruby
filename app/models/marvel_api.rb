@@ -7,7 +7,7 @@ class MarvelApi
   PUBLIC_KEY = '13f408c89f57ccc5b7754610e0fcc5ff'
   PRIVATE_KEY =  Rails.application.secrets.marvel_private_key
   ORDER_BY = "-onsaleDate"
-  LIMIT = 90
+  LIMIT = 30
   CACHE_POLICY = lambda { 7.days.ago }
 
   attr_reader :character, :wrapper, :set
@@ -42,7 +42,7 @@ class MarvelApi
   end
 
   def get_character_id
-    get_parsed_results(characters_url).first.fetch('id')
+    get_parsed_results(characters_url).first.try(:fetch, 'id')
   end
 
   def get_parsed_results(url)
@@ -50,7 +50,7 @@ class MarvelApi
   end
 
   def characters_url
-    url('characters', { name: character })
+    url('characters', { name: character, limit: 1 })
   end
 
   def comics_url(offset: 0)

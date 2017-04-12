@@ -1,6 +1,6 @@
 var ComicsPage = React.createClass({
   perPage: 15,
-  comicLimit: 90,
+  comicLimit: 30,
   page: 1,
   set: 1,
 
@@ -11,8 +11,14 @@ var ComicsPage = React.createClass({
           <img src="/assets/marvel_logo.png"/>
           <input type="text" value={this.state.searchValue} onKeyPress={this.handleKeyPress} onChange={this.updateSearchValue} placeholder="Search for marvel characters or teams..." autoFocus></input>
         </div>
-        <Comics comics={this.state.currentComics} handleFavouriteClick={this.handleFavouriteClick}/>
-        <p>Current page: {this.state.pageNumber}</p>
+        { this.state.allComics.length > 0 ?
+          <Comics comics={this.state.currentComics} handleFavouriteClick={this.handleFavouriteClick}/>
+          :
+          <div id="no_comics">
+            <h2>Sorry, no comics were found</h2>
+          </div>
+        }
+        <p id="current_page_text">Current page: {this.state.pageNumber}</p>
         <button className="pagination_button left box_shadow" disabled={this.state.disableButtons} onClick={this.previousPage}>PREVIOUS PAGE</button>
         <button className="pagination_button right box_shadow" disabled={this.state.disableButtons} onClick={this.nextPage}>NEXT PAGE</button>
       </div>
