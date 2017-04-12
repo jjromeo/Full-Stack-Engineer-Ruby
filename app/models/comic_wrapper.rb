@@ -4,6 +4,7 @@ class ComicWrapper
   EDITION_REGEX = /#\d{1,2}/
 
   attr_reader :data
+
   def initialize(data)
     @data = data
   end
@@ -20,7 +21,7 @@ class ComicWrapper
   end
 
   def title
-    raw_title.try(:gsub, YEAR_REGEX, "").try(:gsub, EDITION_REGEX, "")
+    raw_title.try(:gsub, YEAR_REGEX, "").try(:gsub, EDITION_REGEX, "").try(:squeeze, " ")
   end
 
   def year
