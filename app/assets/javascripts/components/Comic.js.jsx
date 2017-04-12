@@ -1,10 +1,25 @@
 var Comic = React.createClass({
   render: function() {
     return (
-      <li className="comic">
+      <li className={this.favouriteClass()} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
         <div>
-          <img src={this.props.image_url} className="box_shadow front_cover"></img>
+          <div className="front_cover">
+            <img src={this.props.image_url} className="box_shadow front_cover"></img>
+          </div>
           <HeartImage comic_id={this.props.comic_id} isFavourited={this.state.isFavourited} handleFavouriteClick={this.handleFavouriteClick}/>
+          <div className="comic_overlay" style={{display: this.overlayState()}}>
+            <span className="overlay_text">
+              <div className="title">{this.props.title}</div>
+              <div className="further_info">
+                { this.props.edition &&
+                  <span className="edition">{this.props.edition}</span>
+                }
+                { this.props.year &&
+                  <span className="year">{this.props.year}</span>
+                  }
+              </div>
+            </span>
+          </div>
         </div>
       </li>
     )
@@ -19,7 +34,23 @@ var Comic = React.createClass({
   },
 
   getInitialState: function() {
-    return { isFavourited: this.props.isFavourited };
+    return { isFavourited: this.props.isFavourited, displayOverlay: false };
+  },
+
+  favouriteClass: function() {
+    return this.state.isFavourited ? 'comic favourited' : 'comic'
+  },
+
+  mouseOver: function() {
+    this.setState({ displayOverlay: true })
+  },
+
+  mouseOut: function() {
+    this.setState({ displayOverlay: false })
+  },
+
+  overlayState: function() {
+    return this.state.displayOverlay ? 'block' : 'none';
   },
 
   createFavourite: function() {

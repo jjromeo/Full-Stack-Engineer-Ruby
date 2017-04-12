@@ -9,7 +9,7 @@ var ComicsPage = React.createClass({
       <div>
         <div id="search_header" className="box_shadow">
           <img src="/assets/marvel_logo.png"/>
-          <input type="text" value={this.state.searchValue} onKeyPress={this.handleKeyPress} onChange={this.updateSearchValue} placeholder="Search for marvel characters or teams..."></input>
+          <input type="text" value={this.state.searchValue} onKeyPress={this.handleKeyPress} onChange={this.updateSearchValue} placeholder="Search for marvel characters or teams..." autoFocus></input>
         </div>
         <Comics comics={this.state.currentComics} handleFavouriteClick={this.handleFavouriteClick}/>
         <p>Current page: {this.state.pageNumber}</p>

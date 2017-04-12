@@ -1,5 +1,8 @@
 class ComicWrapper
   IMAGE_VARIANT_SIZE = "portrait_incredible"
+  YEAR_REGEX = /\(\d{4}\)/
+  EDITION_REGEX = /#\d{1,2}/
+
   attr_reader :data
   def initialize(data)
     @data = data
@@ -8,6 +11,8 @@ class ComicWrapper
   def as_json(options = {})
     {
       title: title,
+      year: year,
+      edition: edition,
       id: id,
       imageUrl: image_url,
       isFavourited: favourited?
@@ -15,7 +20,15 @@ class ComicWrapper
   end
 
   def title
-    data.fetch('title', nil)
+    raw_title.try(:gsub, YEAR_REGEX, "").try(:gsub, EDITION_REGEX, "")
+  end
+
+  def year
+    raw_title.try(:[], YEAR_REGEX).try(:[], /\d{4}/)
+  end
+
+  def edition
+    raw_title.try(:[], EDITION_REGEX)
   end
 
   def id
@@ -31,6 +44,10 @@ class ComicWrapper
   end
 
   private
+
+  def raw_title
+    data.fetch('title', nil)
+  end
 
   def raw_image_url
     thumbnail.fetch('path', nil)
