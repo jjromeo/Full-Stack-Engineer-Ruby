@@ -1,18 +1,13 @@
 class ComicsController < ApplicationController
   def index
-    @comics = MarvelApi.new.get_comics
-    @comics = @comics.map {|comic| ComicWrapper.new(comic) }
+    @comics = MarvelApi.new.comics
   end
 
   def fetch
     character = params[:character]
-    set =  params[:set].to_i || 1
-    if character.present?
-      @comics = MarvelApi.new.get_comics_by_character(set: set, name: character)
-    else
-      @comics = MarvelApi.new.get_comics(set: set)
-    end
-    @comics = @comics.map {|comic| ComicWrapper.new(comic) }
+    set =  params[:set] || 1
+
+    @comics = MarvelApi.new(character: character, set: set.to_i).comics
     render json: @comics
   end
 end

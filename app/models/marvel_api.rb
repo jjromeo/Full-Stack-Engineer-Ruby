@@ -10,31 +10,47 @@ class MarvelApi
   LIMIT = 90
   CACHE_POLICY = lambda { 7.days.ago }
 
-  def get_comics(set: 1)
+  attr_reader :character, :wrapper, :set
+
+  def initialize(character: nil, set: 1, wrapper: ComicWrapper)
+    @wrapper = wrapper
+    @character = character
+    @set = set
+  end
+
+  def comics
+    fetched_comics.map {|comic| wrapper.new(comic) }
+  end
+
+  private
+
+  def fetched_comics
+    character.present? ? get_comics_by_character : get_all_comics
+  end
+
+  def get_comics_by_character
+    offset = (set - 1) * LIMIT
+    id = get_character_id
+    url = character_comics_url(offset: offset, character_id: id)
+    get_parsed_results(url)
+  end
+
+  def get_all_comics
     offset = (set - 1) * LIMIT
     url = comics_url(offset: offset)
     get_parsed_results(url)
   end
 
-  def get_comics_by_character(set: 1, name:)
-    offset = (set - 1) * LIMIT
-    id = get_character_id(name)
-    url = character_comics_url(offset: offset, character_id: id)
-    get_parsed_results(url)
-  end
-
-  private
-
-  def get_character_id(name)
-    get_parsed_results(characters_url(name)).first.fetch('id')
+  def get_character_id
+    get_parsed_results(characters_url).first.fetch('id')
   end
 
   def get_parsed_results(url)
     JSON.parse(get_url_with_caching(url)).fetch('data', {}).fetch('results', [])
   end
 
-  def characters_url(name)
-    url('characters', { name: name })
+  def characters_url
+    url('characters', { name: character })
   end
 
   def comics_url(offset: 0)
