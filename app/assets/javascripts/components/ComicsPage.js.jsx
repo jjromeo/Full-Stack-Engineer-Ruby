@@ -104,6 +104,9 @@ var ComicsPage = React.createClass({
 
   handleKeyPress: function(event) {
     if(event.key == 'Enter') {
+      this.page = 1;
+      this.set = 1;
+      this.setState({ pageNumber: 1 })
       this.getComics();
     }
   }
