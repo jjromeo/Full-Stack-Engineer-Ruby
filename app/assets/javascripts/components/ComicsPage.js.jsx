@@ -44,7 +44,7 @@ var ComicsPage = React.createClass({
       this.page = 1
       this.getComics();
     }
-    this.setState({pageNumber: this.state.pageNumber + 1})
+    this.setState({ pageNumber: this.state.pageNumber + 1 });
   },
 
   refreshCurrentComics: function() {
@@ -63,7 +63,7 @@ var ComicsPage = React.createClass({
 
   decreasePageNumber: function() {
     if(this.state.pageNumber > 1) {
-      this.setState({pageNumber: this.state.pageNumber - 1});
+      this.setState({ pageNumber: this.state.pageNumber - 1 });
     }
   },
 
@@ -87,8 +87,8 @@ var ComicsPage = React.createClass({
 
   indexComics: function(comics) {
     var indexedComics = comics.map(function(comic, index){
-      comic.index = index
-      return comic
+      comic.index = index;
+      return comic;
     })
     return indexedComics;
   },

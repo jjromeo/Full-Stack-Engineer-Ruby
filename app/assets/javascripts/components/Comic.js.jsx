@@ -38,15 +38,15 @@ var Comic = React.createClass({
   },
 
   favouriteClass: function() {
-    return this.state.isFavourited ? 'comic favourited' : 'comic'
+    return this.state.isFavourited ? 'comic favourited' : 'comic';
   },
 
   mouseOver: function() {
-    this.setState({ displayOverlay: true })
+    this.setState({ displayOverlay: true });
   },
 
   mouseOut: function() {
-    this.setState({ displayOverlay: false })
+    this.setState({ displayOverlay: false });
   },
 
   overlayState: function() {
@@ -64,7 +64,7 @@ var Comic = React.createClass({
         this.setState({ isFavourited: true });
         this.props.handleFavouriteClick(this.props.index, true);
       }.bind(this)
-    })
+    });
   },
 
   destroyFavourite: function() {
@@ -73,9 +73,9 @@ var Comic = React.createClass({
       url: url,
       type: "DELETE",
       success: function(response) {
-        this.setState({ isFavourited: false })
+        this.setState({ isFavourited: false });
         this.props.handleFavouriteClick(this.props.index, false);
       }.bind(this)
-    })
+    });
   }
 });
