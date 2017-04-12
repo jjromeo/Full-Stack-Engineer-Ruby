@@ -7,12 +7,14 @@ var ComicsPage = React.createClass({
   render: function() {
     return(
       <div>
-        <input type="text" value={this.state.searchValue} onChange={this.updateSearchValue} placeholder="Search for a character"></input>
-        <button onClick={this.getComics}>Search!</button>
+        <div id="search_header" className="box_shadow">
+          <img src="/assets/marvel_logo.png"/>
+          <input type="text" value={this.state.searchValue} onKeyPress={this.handleKeyPress} onChange={this.updateSearchValue} placeholder="Search for marvel characters or teams..."></input>
+        </div>
         <Comics comics={this.state.currentComics} handleFavouriteClick={this.handleFavouriteClick}/>
         <p>Current page: {this.state.pageNumber}</p>
-        <button disabled={this.state.disableButtons} onClick={this.previousPage}>Previous Page</button>
-        <button disabled={this.state.disableButtons} onClick={this.nextPage}>Next page</button>
+        <button className="pagination_button left box_shadow" disabled={this.state.disableButtons} onClick={this.previousPage}>PREVIOUS PAGE</button>
+        <button className="pagination_button right box_shadow" disabled={this.state.disableButtons} onClick={this.nextPage}>NEXT PAGE</button>
       </div>
     )
   },
@@ -98,5 +100,11 @@ var ComicsPage = React.createClass({
   handleFavouriteClick(comicIndex, isFavourited) {
     var comic = this.state.allComics[comicIndex];
     comic.isFavourited = isFavourited;
+  },
+
+  handleKeyPress: function(event) {
+    if(event.key == 'Enter') {
+      this.getComics();
+    }
   }
 })

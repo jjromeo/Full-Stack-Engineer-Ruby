@@ -3,7 +3,7 @@ var Comic = React.createClass({
     return (
       <li className="comic">
         <div>
-          <img src={this.props.image_url}></img>
+          <img src={this.props.image_url} className="box_shadow front_cover"></img>
           <HeartImage comic_id={this.props.comic_id} isFavourited={this.state.isFavourited} handleFavouriteClick={this.handleFavouriteClick}/>
         </div>
       </li>

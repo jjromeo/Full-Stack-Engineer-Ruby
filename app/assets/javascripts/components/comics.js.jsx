@@ -5,7 +5,7 @@ var Comics = React.createClass({
     }.bind(this));
     return(
       <div id="comics">
-      <ul>
+        <ul>
         { comics }
         </ul>
       </div>

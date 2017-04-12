@@ -1,5 +1,5 @@
 class ComicWrapper
-  IMAGE_VARIANT_SIZE = "portrait_xlarge"
+  IMAGE_VARIANT_SIZE = "portrait_incredible"
   attr_reader :data
   def initialize(data)
     @data = data
@@ -10,7 +10,7 @@ class ComicWrapper
       title: title,
       id: id,
       imageUrl: image_url,
-      isFavourited: favourited
+      isFavourited: favourited?
     }
   end
 
@@ -26,7 +26,7 @@ class ComicWrapper
     "#{raw_image_url}/#{IMAGE_VARIANT_SIZE}.#{image_extension}"
   end
 
-  def favourited
+  def favourited?
     Favourite.favourited?(id)
   end
 
