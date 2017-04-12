@@ -63,7 +63,10 @@ var Comic = React.createClass({
       success: function(response) {
         this.setState({ isFavourited: true });
         this.props.handleFavouriteClick(this.props.index, true);
-      }.bind(this)
+      }.bind(this),
+      error: function() {
+        alert("An error occured, you are currently unable to favourite this comic");
+      }
     });
   },
 
@@ -75,7 +78,10 @@ var Comic = React.createClass({
       success: function(response) {
         this.setState({ isFavourited: false });
         this.props.handleFavouriteClick(this.props.index, false);
-      }.bind(this)
+      }.bind(this),
+      error: function() {
+        alert("An error occured, you are currently unable to unfavourite this comic");
+      }
     });
   }
 });

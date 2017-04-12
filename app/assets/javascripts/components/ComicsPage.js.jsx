@@ -87,7 +87,10 @@ var ComicsPage = React.createClass({
         var indexedComics = this.indexComics(comics);
         this.setState({ allComics: indexedComics, disableButtons: ''});
         this.refreshCurrentComics();
-      }.bind(this)
+      }.bind(this),
+      error: function() {
+        alert("Error fetching comics, please try again later");
+      }
     });
   },
 
